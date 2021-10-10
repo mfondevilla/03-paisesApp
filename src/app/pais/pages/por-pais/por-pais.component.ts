@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PaisService } from '../../services/pais.service';
 
 
 @Component({
@@ -10,11 +11,19 @@ import { Component } from '@angular/core';
 export class PorPaisComponent {
 
   termino: string="";
+  hayError: boolean=false;
 
-  constructor() { }
+  constructor(private PaisService: PaisService) { }
 
   buscar() {
+    this.hayError = false;
     console.log(this.termino);
+    this.PaisService.buscarPais(this.termino)
+      .subscribe(paises=>{        
+        console.log(paises);
+      }, (err)=>{
+         this.hayError=true;
+      });
   }
 
 }
